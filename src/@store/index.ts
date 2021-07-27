@@ -4,6 +4,7 @@ import createSagaMiddleware from 'redux-saga'
 import thunkMiddleware from 'redux-thunk'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
+import { composeWithDevTools } from 'redux-devtools-extension'
 // @ts-ignore
 import { seamlessImmutableReconciler, seamlessImmutableTransformCreator } from 'redux-persist-seamless-immutable'
 import { createMemoryHistory, createBrowserHistory } from 'history'
@@ -29,7 +30,7 @@ const history =
     ? createMemoryHistory({ initialEntries: ['/'] })
     : createBrowserHistory()
 
-export default () => {
+export default function store () {
   const middleware = [thunkMiddleware, routerMiddleware(history)]
 
   const sagaMiddleware = createSagaMiddleware()
@@ -37,12 +38,13 @@ export default () => {
 
   let enhancer = applyMiddleware(...middleware)
 
+  let composeEnhancer = composeWithDevTools(enhancer);
   const persistedReducer = persistReducer(
     persistConfig,
     createRootReducer(history)
   )
 
-  const store = createStore(persistedReducer, enhancer)
+  const store = createStore(persistedReducer, composeEnhancer)
 
   const persistor = persistStore(store)
 

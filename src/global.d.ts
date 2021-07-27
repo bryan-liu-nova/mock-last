@@ -1,4 +1,4 @@
-declare namespace farnham {
+declare namespace transportSystem {
   type AsyncAction = {
     REQUEST: string
     SUCCESS: string
