@@ -33,16 +33,15 @@ const Home = () => {
   const [searchService, setSearchService] = useState('');
   const [searchBike, setSearchBike] = useState('');
   const [isCycleViewShown, setIsCycleShown] = useState(false);
+  const dispatch = useDispatch();
   const transports = useSelector(getTransports);
   const _bikePoints = useSelector(getBikePoints);
   const isBikeLoading = useSelector(getIsLoading);
-  const dispatch = useDispatch();
 
   const bikePoints = useMemo(() => {
     return (_bikePoints || {})[searchBike]
   }, [_bikePoints, searchBike]);
 
-  
   const debouncedDispatchGetBikePoints = useDebouncedCallback((_searchBike: string) => handleGetBikePointsInformation(_searchBike), 1000);
 
   useEffect(() => {
