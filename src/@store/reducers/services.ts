@@ -1,5 +1,6 @@
-import { ServicesAsyncActions } from '@store/actions/services'
+// Todo: Manually Set Initial Value
 import { createReducerFromActions } from '@utils/store'
-import { values } from 'lodash'
+import { ServicesAsyncActions } from '@store/actions/services'
+import values from 'lodash/values'
 
-export default createReducerFromActions(...values(ServicesAsyncActions))
+export default createReducerFromActions(...values(ServicesAsyncActions));

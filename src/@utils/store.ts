@@ -91,7 +91,7 @@ export const createReducerHandlers = (action: AsyncAction) => {
       }
 
       const payloadResource = get(action, 'payload', {})
-      Object.keys(payloadResource).map((key: string) => {
+      Object.keys(payloadResource).forEach((key: string) => {
         set(nextState, key, payloadResource[key])
       })
 

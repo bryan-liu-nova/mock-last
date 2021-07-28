@@ -1,62 +1,84 @@
 body {
-	font-family: Arial, Helvetica, sans-serif;
-	color: #2F2C40;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #2f2c40;
 }
 
 * {
-	margin: 0px; 
-	padding: 0px; 
-	box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
 }
 
 a {
-	font-size: 16px;
-	line-height: 1.7;
-	color: #fff;
-	margin: 0px;
-	transition: all 0.4s;
-	-webkit-transition: all 0.4s;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #fff;
+  margin: 0px;
+  transition: all 0.4s;
+  -webkit-transition: all 0.4s;
   -o-transition: all 0.4s;
   -moz-transition: all 0.4s;
 }
 
 a:focus {
-	outline: none !important;
+  outline: none !important;
 }
 
 a:hover {
-	text-decoration: none;
+  text-decoration: none;
   color: #d8d8d8;
 }
 
-h1,h2,h3,h4,h5,h6 {
-	margin: 0px;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0px;
 }
 
 p {
-	font-family: Poppins-Regular;
-	font-size: 14px;
-	line-height: 1.7;
-	color: #666666;
-	margin: 0px;
+  font-family: Poppins-Regular;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #666666;
+  margin: 0px;
 }
 
-ul, li {
-	margin: 0px;
-	list-style-type: none;
+ul,
+li {
+  margin: 0px;
+  list-style-type: none;
 }
 
 input {
-	outline: none;
-	border: none;
+  outline: none;
+  border: none;
 }
 
-input:focus::-webkit-input-placeholder { color:transparent; }
-input:focus:-moz-placeholder { color:transparent; }
-input:focus::-moz-placeholder { color:transparent; }
-input:focus:-ms-input-placeholder { color:transparent; }
+input:focus::-webkit-input-placeholder {
+  color: transparent;
+}
+input:focus:-moz-placeholder {
+  color: transparent;
+}
+input:focus::-moz-placeholder {
+  color: transparent;
+}
+input:focus:-ms-input-placeholder {
+  color: transparent;
+}
 
-input::-webkit-input-placeholder { color: #acacac; }
-input:-moz-placeholder { color: #acacac; }
-input::-moz-placeholder { color: #acacac; }
-input:-ms-input-placeholder { color: #acacac; }
+input::-webkit-input-placeholder {
+  color: #acacac;
+}
+input:-moz-placeholder {
+  color: #acacac;
+}
+input::-moz-placeholder {
+  color: #acacac;
+}
+input:-ms-input-placeholder {
+  color: #acacac;
+}

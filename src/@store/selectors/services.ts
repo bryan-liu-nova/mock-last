@@ -4,18 +4,16 @@ import * as _ from 'lodash'
 
 export const getState = (state: any) => state.services
 
-const getSortedServices = (data: any) => {
-  if (data && data.length > 0) {
-    let services = _.sortBy(data, ['modeName', 'name']);
-    // console.log(services, 'this is services');
-    return services;
+const getSortedTransports = (data: any) => {
+  if (data?.length > 0) {
+    return _.sortBy(data, ['modeName', 'name']);
   }
   return data
 }
 
-export const getServices = createSelector(
+export const getTransports = createSelector(
   getState,
-  ({ servicesStatus }) => getSortedServices(servicesStatus)
+  ({ transports }) => getSortedTransports(transports)
 )
 
 export const getBikePoints = createSelector(

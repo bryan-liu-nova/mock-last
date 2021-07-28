@@ -1,8 +1,8 @@
 import { createAsyncAction } from "@utils/store";
 
-export const GetServicesStatus = createAsyncAction('services', 'getServiceStatus', {
+export const GetTransports = createAsyncAction('services', 'getTransports', {
   REQUEST: [],
-  SUCCESS: ['servicesStatus'],
+  SUCCESS: ['transports'],
 });
 
 export const GetBikePoints = createAsyncAction('services', 'getBikePoints', {
@@ -11,6 +11,6 @@ export const GetBikePoints = createAsyncAction('services', 'getBikePoints', {
 })
 
 export const ServicesAsyncActions = {
-  GetServicesStatus,
+  GetTransports,
   GetBikePoints
 }
