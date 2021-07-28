@@ -2,7 +2,9 @@
 import qs from 'qs'
 import { API } from '@constants/app'
 
+
 export const apiCall = async (url: string, method: 'get' | 'post' | 'put' | 'delete', params: any) => {
+  console.log(API,'this is api call')
   const query = method === 'post' ||
     method === 'put' ||
     method === 'delete' 
