@@ -7,19 +7,14 @@ import { GET_ARTISTS_URL, GET_ARTIST_PROFILE_URL } from '@constants/app'
 function* loadArtists(action: { payload: {name: string, page: number}, type: string}) {
   const { GetArtists: { Actions: { SUCCESS, FAILURE } } } = ServicesAsyncActions
   const { payload: { name, page} } = action
-  console.log(action, 'this is action');
   // @ts-ignore
   const artists = yield select(getArtists)
-  if ((artists || {})[name]) {
+  if (artists.length > 0) {
     yield put(SUCCESS(artists))
   } else {
     try {
     // @ts-ignore
       const response = yield call(apiCall, GET_ARTISTS_URL(name, page), 'get')
-      // yield put(SUCCESS({
-      //   ...artists,
-      //   [name]: response
-      // }))
       yield put(SUCCESS({
         response
       }))
@@ -35,7 +30,7 @@ function* loadArtistProfile(action: { payload: {name: string, mbid: string}, typ
   const { payload: { name, mbid } } = action
   // @ts-ignore
   const artists = yield select(getArtists)
-  if ((artists || {})[name]) {
+  if (artists.length > 0) {
     yield put(SUCCESS(artists))
   } else {
     try {

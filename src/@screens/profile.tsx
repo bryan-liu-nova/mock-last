@@ -51,14 +51,14 @@ const Profile = () => {
     <Container>
       <Header>
         <div onClick={handleBackToHome}>
-          <img src="https://img.icons8.com/ios/30/ffffff/exit.png" alt="unable to load..."/>
+          <img src="https://img.icons8.com/ios/30/ffffff/exit.png" alt="unable to load..." />
         </div>
       </Header>
       <Content>
         <NameWrap >{name}</NameWrap>
         <StatsWrap>
           {
-            profile && profile.stats && Object.keys(profile.stats)?.length > 0 && Object.keys(profile.stats).map((stat: string) => 
+            profile && profile.stats && Object.keys(profile.stats)?.length > 0 && Object.keys(profile.stats).map((stat: string) =>
               <div key={stat}>
                 <label>
                   {parseInt(profile.stats[stat]).toLocaleString()} {stat}
@@ -69,20 +69,20 @@ const Profile = () => {
         </StatsWrap>
         <TagsWrap>
           {
-            profile && profile.tags?.tag?.length > 0 && profile.tags.tag.map((item: TagType, index: number) => 
+            profile && profile.tags?.tag?.length > 0 && profile.tags.tag.map((item: TagType, index: number) =>
               <Tag key={item.name} color={TAG_COLORS[index]}>{item.name}</Tag>
             )
           }
         </TagsWrap>
         <SummaryWrap>
           {
-            profile && profile.bio && 
+            profile && profile.bio &&
             <React.Fragment>
-              <Summary dangerouslySetInnerHTML={{ 
-                __html: readMore 
-                  ? profile.bio.content 
+              <Summary dangerouslySetInnerHTML={{
+                __html: readMore
+                  ? profile.bio.content
                   : profile.bio.summary
-                }}
+              }}
               ></Summary>
               <div className="read-more" onClick={() => setReadMore(prev => !prev)}>
                 {

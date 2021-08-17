@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useDebouncedCallback } from 'use-debounce';
 import { GetArtists } from '@store/actions/artists'
 import { getArtists, getLoadingArtists } from '@store/selectors/artists'
-import { ICON_MULTIPLY_URL, ICON_SEARCH_URL} from '@constants/app'
+import { ICON_MULTIPLY_URL, ICON_SEARCH_URL } from '@constants/app'
 import Pagination from '@components/pagination'
 import {
   ClearIcon,
@@ -23,13 +23,12 @@ import { FadeLoader } from 'react-spinners'
 const Home = () => {
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
-  const [artists, setArtists] = useState([]);
   const dispatch = useDispatch();
   const _artists = useSelector(getArtists);
   const isArtistsLoading = useSelector(getLoadingArtists);
 
   useEffect(() => {
-    dispatch(GetArtists.Actions.REQUEST('chen'))
+    dispatch(GetArtists.Actions.REQUEST(''))
   }, [dispatch]);
 
   const handleGetArtists = (_search: string, page: number = 1) => {
@@ -73,7 +72,7 @@ const Home = () => {
       <Content>
         <ProfileWrap>
           {
-            (_artists ?? []).map((profile: any) => 
+            (_artists ?? []).map((profile: any) =>
               <ProfileItem key={`${profile.mbid}-${profile.listeners}`}>
                 <div>
                   <Link to={`/${profile.name}/${profile.mbid}/profile`}>
@@ -84,7 +83,7 @@ const Home = () => {
                   <label>{parseInt(profile.listeners).toLocaleString()} listeners</label>
                 </div>
                 <div>
-                  <Link to=""/>
+                  <Link to="" />
                 </div>
               </ProfileItem>
             )
@@ -92,7 +91,7 @@ const Home = () => {
         </ProfileWrap>
         <FadeLoader color="rgb(54, 215, 183)" css={override} loading={isArtistsLoading} />
       </Content>
-      <Pagination page={page} handleChangePage={(page) => handleChangePage(page)}/>
+      <Pagination page={page} artists={_artists} handleChangePage={(page) => handleChangePage(page)} />
     </Container>
   )
 }

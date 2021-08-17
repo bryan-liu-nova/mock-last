@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 import { css } from "@emotion/react";
 
 export const override = css`
@@ -26,7 +26,7 @@ export const Header = styled.div`
   img {
     margin: 0 20px;
   }
-`
+`;
 export const Container = styled.div`
   max-height: 100vh;
   height: 100vh;
@@ -36,15 +36,15 @@ export const Container = styled.div`
     font-weight: 700;
     padding: 20px 0 20px 0;
   }
-`
+`;
 export const Content = styled.div`
   padding: 20px;
-`
+`;
 export const NameWrap = styled.label`
   font-weight: 700;
   color: black;
   font-size: 25px;
-`
+`;
 export const StatsWrap = styled.div`
   margin: 0 0 10px 0;
   color: #999;
@@ -52,20 +52,20 @@ export const StatsWrap = styled.div`
   > div {
     margin: 5px 0;
   }
-`
+`;
 export const Tag = styled.div`
   padding: 5px 15px;
-  background: ${prop => prop.color};
+  background: ${(prop) => prop.color};
   margin: 0 10px 0 0;
   border-radius: 20px;
   color: white;
   cursor: default;
-`
+`;
 export const TagsWrap = styled.div`
   display: flex;
   flex-wrap: wrap;
   margin: 0 0 10px 0;
-`
+`;
 export const SimilarArtistsWrap = styled.div`
   margin: 10px 0;
   display: grid;
@@ -76,13 +76,13 @@ export const SimilarArtistsWrap = styled.div`
   grid-row-gap: 50px;
   > div {
     padding: 10px;
-    border: 1px solid rgb(0,0,0,0.25);
+    border: 1px solid rgb(0, 0, 0, 0.25);
     border-radius: 4px;
   }
   a {
     color: #005399;
   }
-`
+`;
 
 export const Summary = styled.div`
   font-size: 20px;
@@ -91,11 +91,11 @@ export const Summary = styled.div`
   a {
     display: none;
   }
-  `
+`;
 export const SummaryWrap = styled.div`
   .read-more {
     margin: 10px 0 0 0;
     color: #005399;
     cursor: pointer;
   }
-`
+`;

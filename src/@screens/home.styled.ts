@@ -16,11 +16,11 @@ export const Container = styled.div`
 export const Content = styled.div`
   overflow-y: scroll;
   height: calc(100% - 175px);
-`
+`;
 export const IconWrap = styled.div`
   display: flex;
   justify-content: center;
-`
+`;
 export const SearchWrap = styled.div`
   background-color: black;
   line-height: 24px;
@@ -32,7 +32,7 @@ export const SearchWrap = styled.div`
 
 export const SearchInput = styled.input`
   padding: 10px 5px;
-  border: 1px solid rgb(0,0,0,0.25);
+  border: 1px solid rgb(0, 0, 0, 0.25);
   border-radius: 3px;
   width: 200px;
   font-size: 20px;
@@ -43,7 +43,7 @@ export const SearchInput = styled.input`
   ::placeholder {
     color: #666;
   }
-`
+`;
 export const SearchIcon = styled.div`
   width: 81px;
   height: 81px;
@@ -51,7 +51,7 @@ export const SearchIcon = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`
+`;
 export const ClearIcon = styled.div`
   width: 81px;
   height: 81px;
@@ -59,7 +59,7 @@ export const ClearIcon = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-`
+`;
 export const ProfileWrap = styled.div`
   display: grid;
   grid-template-columns: auto auto auto auto;
@@ -69,7 +69,7 @@ export const ProfileWrap = styled.div`
   padding: 20px;
   width: 100%;
   height: 100%;
-`
+`;
 export const ProfileItem = styled.div`
   text-align: center;
   padding: 10px;
@@ -78,10 +78,10 @@ export const ProfileItem = styled.div`
   padding: 10px;
   > div > a {
     font-weight: 700;
-    color: black
+    color: black;
   }
   .listener {
     margin: 5px;
     color: #999;
   }
-`
+`;
