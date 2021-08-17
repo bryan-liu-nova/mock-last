@@ -1,9 +1,9 @@
 import { all, fork } from 'redux-saga/effects'
-import services from './services'
+import artists from './artists'
 
 const rootSaga = function* root() {
   yield all([
-    fork(services)
+    fork(artists)
   ])
 }
 

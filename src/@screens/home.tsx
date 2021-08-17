@@ -1,184 +1,99 @@
-import { GetTransports, GetBikePoints } from '@store/actions/services'
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import FadeLoader from "react-spinners/FadeLoader";
-import { getBikePoints, getTransports, getIsLoading } from '@store/selectors/services'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSun, faMoon, faTrafficLight, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
-import { ServiceType, LineStatus, BikePoint } from '@models/constants';
-import { useDebouncedCallback } from 'use-debounce'
-import { 
-  ContentBody, 
-  ContentHeading, 
-  ContentLayoutView, 
-  ContentView, 
-  CycleView, 
-  HomeScreenView, 
-  MenuLayoutView, 
-  MenuView, 
+import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useDebouncedCallback } from 'use-debounce';
+import { GetArtists } from '@store/actions/artists'
+import { getArtists, getLoadingArtists } from '@store/selectors/artists'
+import { ICON_MULTIPLY_URL, ICON_SEARCH_URL} from '@constants/app'
+import Pagination from '@components/pagination'
+import {
+  ClearIcon,
+  Content,
+  Container,
+  IconWrap,
   override,
-  ServiceView 
+  ProfileItem,
+  ProfileWrap,
+  SearchIcon,
+  SearchInput,
+  SearchWrap
 } from './home.styled'
-import { useMemo } from 'react';
+import { FadeLoader } from 'react-spinners'
 
 const Home = () => {
-  const [selectedTransport, setSelectedTransport] = useState<
-    {
-      id: string,
-      lineStatuses: any
-    }>({
-      id: '',
-      lineStatuses: []
-    });
-  const [searchService, setSearchService] = useState('');
-  const [searchBike, setSearchBike] = useState('');
-  const [isCycleViewShown, setIsCycleShown] = useState(false);
+  const [search, setSearch] = useState('');
+  const [page, setPage] = useState(1);
+  const [artists, setArtists] = useState([]);
   const dispatch = useDispatch();
-  const transports = useSelector(getTransports);
-  const _bikePoints = useSelector(getBikePoints);
-  const isBikeLoading = useSelector(getIsLoading);
-
-  const bikePoints = useMemo(() => {
-    return (_bikePoints || {})[searchBike]
-  }, [_bikePoints, searchBike]);
-
-  const debouncedDispatchGetBikePoints = useDebouncedCallback((_searchBike: string) => handleGetBikePointsInformation(_searchBike), 1000);
+  const _artists = useSelector(getArtists);
+  const isArtistsLoading = useSelector(getLoadingArtists);
 
   useEffect(() => {
-    dispatch(GetTransports.Actions.REQUEST())
-    dispatch(GetBikePoints.Actions.REQUEST(''))
-  }, [dispatch])
+    dispatch(GetArtists.Actions.REQUEST('chen'))
+  }, [dispatch]);
 
-  useEffect(() => {
-    if (transports?.length > 0) {
-      setSelectedTransport(transports[0]);
+  const handleGetArtists = (_search: string, page: number = 1) => {
+    dispatch(GetArtists.Actions.REQUEST(_search, page))
+  }
+  const debouncedHandleSearch = useDebouncedCallback(
+    (_search, page) => handleGetArtists(_search, page), 1000
+  );
+  const handleSearchArtists = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const _search = event.target.value;
+    debouncedHandleSearch(_search, page);
+    setPage(1);
+    setSearch(_search);
+  }
+  const handleClearSearch = () => {
+    if (search) {
+      setSearch('');
+      setPage(1);
+      handleGetArtists('');
     }
-  }, [transports])
-
-  const handleGetBikePointsInformation = (_searchBike: string) => {
-    dispatch(GetBikePoints.Actions.REQUEST(_searchBike))
   }
-  const handleSearchText = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchService(evt.target.value);
-  }
-  const handleSelectService = (service: { id: string, lineStatuses: [LineStatus] }) => {
-    setIsCycleShown(false);
-    setSelectedTransport(service);
-  }
-  const getMatchedResults = () => {
-    if (searchService) {
-      return transports.filter((service: any) => ~service.name.toUpperCase().indexOf(searchService.toUpperCase()))
+  const handleChangePage = (page: number) => {
+    if (!isArtistsLoading) {
+      handleGetArtists(search, page);
+      setPage(page);
     }
-    return transports;
   }
-  const isOperatedInNight = (data: [ServiceType]) => {
-    if (data?.length > 0) {
-      if (data.filter((item: ServiceType) => item.name === "Night").length > 0) {
-        return true;
-      }
-    }
-    return false;
-  }
-  const hasDisruptions = (data: [LineStatus]) => {
-    if (data?.length > 0) {
-      if (data.filter((item: LineStatus) => item.statusSeverity === 10).length > 0) {
-        return true
-      }
-    }
-    return false
-  }
-  const handleSearchBike = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchBike(evt.currentTarget.value)
-    debouncedDispatchGetBikePoints(evt.currentTarget.value);
-  }
-  const handleCycleView = () => {
-    setSelectedTransport({ id: '', lineStatuses: [] });
-    setIsCycleShown(true);
-  }
-  const createBikePointDescription = (bikePoint: BikePoint) => {
-    return `${bikePoint.id.split('_')[1]} ${bikePoint.commonName} (${bikePoint.lat}, ${bikePoint.lon})}`
-  }
-
   return (
-    <HomeScreenView>
-      <MenuLayoutView>
-        <MenuView>
-          <li className="search-input">
-            <input type="text" value={searchService} placeholder="Search Transport" onChange={handleSearchText} />
-          </li>
+    <Container>
+      <SearchWrap>
+        <SearchInput placeholder="Search for artists..." value={search} onChange={handleSearchArtists} />
+        <IconWrap>
+          <ClearIcon onClick={handleClearSearch}>
+            <img src={ICON_MULTIPLY_URL} alt="unable to load..." />
+          </ClearIcon>
+          <SearchIcon>
+            <img src={ICON_SEARCH_URL} alt="unable to load..." />
+          </SearchIcon>
+        </IconWrap>
+      </SearchWrap>
+      <Content>
+        <ProfileWrap>
           {
-            transports?.length > 0 && getMatchedResults().map((service: any) =>
-              <li
-                onClick={() => handleSelectService(service)}
-                key={service.id}
-                className={`${selectedTransport.id === service.id ? 'active' : ''}`}>
-                <span> {service.name} </span>
-                <span className="icons">
-                  <FontAwesomeIcon icon={isOperatedInNight(service.serviceTypes) ? faMoon : faSun} />
-                  <FontAwesomeIcon icon={hasDisruptions(service.lineStatuses) ? faTrafficLight : faExclamationCircle} />
-                </span>
-              </li>
+            (_artists ?? []).map((profile: any) => 
+              <ProfileItem key={`${profile.mbid}-${profile.listeners}`}>
+                <div>
+                  <Link to={`/${profile.name}/${profile.mbid}/profile`}>
+                    {profile.name}
+                  </Link>
+                </div>
+                <div className="listener">
+                  <label>{parseInt(profile.listeners).toLocaleString()} listeners</label>
+                </div>
+                <div>
+                  <Link to=""/>
+                </div>
+              </ProfileItem>
             )
           }
-          <li className={`cycle-hire ${isCycleViewShown ? 'active' : ''}`} onClick={handleCycleView}>
-            Cycle Hire
-          </li>
-        </MenuView>
-      </MenuLayoutView>
-      <ContentLayoutView>
-        <ContentView>
-          {
-            !isCycleViewShown ?
-              hasDisruptions(selectedTransport.lineStatuses) ?
-                <ServiceView>
-                  <ContentHeading>
-                    No service disruptions
-                  </ContentHeading>
-                </ServiceView> :
-                <ServiceView>
-                  <ContentHeading>
-                    Service currently suffering disruptions
-                  </ContentHeading>
-                  <ContentBody>
-                    <ul>
-                      {
-                        selectedTransport?.lineStatuses?.length > 0 &&
-                        selectedTransport?.lineStatuses?.map((lineStatus: LineStatus) =>
-                          <li key={lineStatus.id}>{lineStatus.reason}</li>
-                        )
-                      }
-                    </ul>
-                  </ContentBody>
-                </ServiceView>
-              :
-              <CycleView>
-                <div className="search-bike__wrap">
-                  <input className="search-bike__input" type="text" value={searchBike} onChange={handleSearchBike} placeholder="Search Bike Info" />
-                </div>
-                {
-                  isBikeLoading
-                    ? <FadeLoader color="rgb(54, 215, 183)" css={override} loading={isBikeLoading} />
-                    : <div className="search-results__wrap">
-                      {
-                        (bikePoints ?? []).length > 0 ?
-                          <ul>
-                            {
-                              bikePoints.map((bikePoint: BikePoint) =>
-                                <li key={`${bikePoint.id}`}>{createBikePointDescription(bikePoint)}</li>
-                              )
-                            }
-                          </ul>
-                          :
-                          <span>No bike points found for {`'${searchBike}'`}</span>
-                      }
-                    </div>
-                }
-              </CycleView>
-          }
-        </ContentView>
-      </ContentLayoutView>
-      <FadeLoader color="rgb(54, 215, 183)" css={override} loading={!transports?.length} />
-    </HomeScreenView>
+        </ProfileWrap>
+        <FadeLoader color="rgb(54, 215, 183)" css={override} loading={isArtistsLoading} />
+      </Content>
+      <Pagination page={page} handleChangePage={(page) => handleChangePage(page)}/>
+    </Container>
   )
 }
 
